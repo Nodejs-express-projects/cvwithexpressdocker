@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config();
 const PORT = process.env.PORT || 5000;
 const routes = require('./routes');
-
+const dbtype = process.env.DATABASENAME;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
@@ -17,7 +19,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('/api', routes());
+app.use('/api', routes(dbtype));
 
 
 /*app.use(function (req, res, next) {
